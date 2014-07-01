@@ -18,6 +18,10 @@ Harness.test({
     text  : 'DELETE FROM `post` WHERE (`post`.`content` = ?)',
     string: 'DELETE FROM `post` WHERE (`post`.`content` = \'hello\'\'s world\')'
   },
+  mssql: {
+    text  : 'DELETE FROM [post] WHERE ([post].[content] = @param1)',
+    string: 'DELETE FROM [post] WHERE ([post].[content] = \'hello\'\'s world\')'
+  },
   params: ["hello's world"]
 });
 
@@ -35,6 +39,10 @@ Harness.test({
     text: 'DELETE `post` FROM `post`',
     string: 'DELETE `post` FROM `post`'
   },
+  mssql: {
+    text: 'DELETE [post] FROM [post]',
+    string: 'DELETE [post] FROM [post]'
+  },
   params: []
 });
 
@@ -51,6 +59,10 @@ Harness.test({
   mysql: {
     text: 'DELETE `post`, `post` FROM `post`',
     string: 'DELETE `post`, `post` FROM `post`'
+  },
+  mssql: {
+    text: 'DELETE [post], [post] FROM [post]',
+    string: 'DELETE [post], [post] FROM [post]'
   },
   params: []
 });
@@ -72,6 +84,10 @@ Harness.test({
     text: 'DELETE `user` FROM `user` INNER JOIN `post` ON (`post`.`userId` = `user`.`id`) WHERE (`post`.`content` = ?)',
     string: 'DELETE `user` FROM `user` INNER JOIN `post` ON (`post`.`userId` = `user`.`id`) WHERE (`post`.`content` = \'foo\')'
   },
+  mssql: {
+    text: 'DELETE [user] FROM [user] INNER JOIN [post] ON ([post].[userId] = [user].[id]) WHERE ([post].[content] = @param1)',
+    string: 'DELETE [user] FROM [user] INNER JOIN [post] ON ([post].[userId] = [user].[id]) WHERE ([post].[content] = \'foo\')'
+  },
   params: [ 'foo' ]
 });
 
@@ -91,6 +107,10 @@ Harness.test({
     text  : 'DELETE FROM `post` WHERE (`post`.`content` = ?)',
     string: 'DELETE FROM `post` WHERE (`post`.`content` = \'\')'
   },
+  mssql: {
+    text  : 'DELETE FROM [post] WHERE ([post].[content] = @param1)',
+    string: 'DELETE FROM [post] WHERE ([post].[content] = \'\')'
+  },
   params: ['']
 });
 
@@ -110,6 +130,10 @@ Harness.test({
     text  : 'DELETE FROM `post` WHERE (`post`.`content` = ?)',
     string: 'DELETE FROM `post` WHERE (`post`.`content` = \'\')'
   },
+  mssql: {
+    text  : 'DELETE FROM [post] WHERE ([post].[content] = @param1)',
+    string: 'DELETE FROM [post] WHERE ([post].[content] = \'\')'
+  },
   params: ['']
 });
 
@@ -128,6 +152,10 @@ Harness.test({
   mysql: {
     text  : 'DELETE FROM `post` WHERE ((`post`.`content` = ?) OR (`post`.`content` IS NULL))',
     string: 'DELETE FROM `post` WHERE ((`post`.`content` = \'\') OR (`post`.`content` IS NULL))'
+  },
+  mssql: {
+    text  : 'DELETE FROM [post] WHERE (([post].[content] = @param1) OR ([post].[content] IS NULL))',
+    string: 'DELETE FROM `post` WHERE (([post].[content] = \'\') OR ([post].[content] IS NULL))'
   },
   params: ['']
 });

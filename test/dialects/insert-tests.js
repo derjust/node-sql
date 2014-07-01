@@ -18,6 +18,10 @@ Harness.test({
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (\'test\', 1)'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (\'test\', 1)'
+  },
   params: ['test', 1]
 });
 
@@ -34,6 +38,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`) VALUES (?)',
     string: 'INSERT INTO `post` (`content`) VALUES (\'whoah\')'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content]) VALUES (@param1)',
+    string: 'INSERT INTO [post] ([content]) VALUES (\'whoah\')'
   },
   params: ['whoah']
 });
@@ -55,6 +63,10 @@ Harness.test({
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (\'test\', 2)'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (\'test\', 2)'
+  },
   params: ['test', 2]
 });
 
@@ -74,6 +86,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (LOWER(?), ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (LOWER(\'TEST\'), 2)'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (LOWER(@param1), @param2)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (LOWER(\'TEST\'), 2)'
   },
   params: ['TEST', 2]
 });
@@ -98,6 +114,10 @@ Harness.test({
     text  : 'INSERT INTO `post` (`content`) VALUES (?), (?)',
     string: 'INSERT INTO `post` (`content`) VALUES (\'whoah\'), (\'hey\')'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content]) VALUES (@param1), (@param2)',
+    string: 'INSERT INTO [post] ([content]) VALUES (\'whoah\'), (\'hey\')'
+  },
   params: ['whoah', 'hey']
 });
 
@@ -121,6 +141,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?), (?, ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (\'whoah\', 1), (\'hey\', 2)'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2), (@param3, @param4)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (\'whoah\', 1), (\'hey\', 2)'
   },
   params: ['whoah', 1, 'hey', 2]
 });
@@ -147,6 +171,10 @@ Harness.test({
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?), (?, ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (\'whoah\', 1), (\'hey\', 2)'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2), (@param3, @param4)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (\'whoah\', 1), (\'hey\', 2)'
+  },
   params: ['whoah', 1, 'hey', 2]
 });
 
@@ -164,6 +192,10 @@ Harness.test({
     text  : 'INSERT INTO `post` () VALUES ()',
     string: 'INSERT INTO `post` () VALUES ()'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] VALUES ()',
+    string: 'INSERT INTO [post] VALUES ()'
+  },
   params: []
 });
 
@@ -178,6 +210,10 @@ Harness.test({
   },
   mysql: {
     throws: true
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] OUTPUT INSERTED.* VALUES ()',
+    string: 'INSERT INTO [post] OUTPUT INSERTED.* VALUES ()'
   },
   params: []
 });
@@ -194,6 +230,10 @@ Harness.test({
   mysql: {
     throws: true
   },
+  mssql: {
+    text  : 'INSERT INTO [post] OUTPUT INSERTED.* VALUES ()',
+    string: 'INSERT INTO [post] OUTPUT INSERTED.* VALUES ()'
+  },
   params: []
 });
 
@@ -208,6 +248,10 @@ Harness.test({
   },
   mysql: {
     throws: true
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] OUTPUT INSERTED.[id] VALUES ()',
+    string: 'INSERT INTO [post] OUTPUT INSERTED.[id] VALUES ()'
   },
   params: []
 });
@@ -224,6 +268,10 @@ Harness.test({
   mysql: {
     throws: true
   },
+  mssql: {
+    text  : 'INSERT INTO [post] OUTPUT INSERTED.[id], INSERTED.[content] VALUES ()',
+    string: 'INSERT INTO [post] OUTPUT INSERTED.[id], INSERTED.[content] VALUES ()'
+  },
   params: []
 });
 
@@ -238,6 +286,10 @@ Harness.test({
   },
   mysql: {
     throws: true
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] OUTPUT INSERTED.[id], INSERTED.[content] VALUES ()',
+    string: 'INSERT INTO [post] OUTPUT INSERTED.[id], INSERTED.[content] VALUES ()'
   },
   params: []
 });
@@ -264,7 +316,12 @@ Harness.test({
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?), (?, DEFAULT)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (\'whoah\', 1), (\'hey\', DEFAULT)',
     params: ['whoah', 1, 'hey']
-  }
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2), (@param3)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (\'whoah\', 1), (\'hey\')',
+    params: ['whoah', 1, 'hey']
+  },
 });
 
 Harness.test({
@@ -288,7 +345,12 @@ Harness.test({
     text  : 'INSERT INTO `post` (`userId`, `content`) VALUES (?, DEFAULT), (?, ?)',
     string: 'INSERT INTO `post` (`userId`, `content`) VALUES (1, DEFAULT), (2, \'hey\')',
     params: [1, 2, 'hey']
-  }
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([userId], [content]) VALUES (@param1), (@param2, @param3)',
+    string: 'INSERT INTO [post] ([userId], [content]) VALUES (1), (2, \'hey\')',
+    params: [1, 2, 'hey']
+  },
 });
 
 Harness.test({
@@ -305,6 +367,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`, `userId`) SELECT \'test\', `id` FROM `user` WHERE (`name` LIKE ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) SELECT \'test\', `id` FROM `user` WHERE (`name` LIKE \'A%\')'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) SELECT \'test\', [id] FROM [user] WHERE ([name] LIKE @param1)',
+    string: 'INSERT INTO [post] ([content], [userId]) SELECT \'test\', [id] FROM [user] WHERE ([name] LIKE \'A%\')'
   },
   params: ['A%']
 });
@@ -324,6 +390,10 @@ Harness.test({
     text  : 'INSERT INTO `post` (`content`, `userId`) SELECT \'test\', `id` FROM `user` WHERE (`name` LIKE ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) SELECT \'test\', `id` FROM `user` WHERE (`name` LIKE \'A%\')'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) SELECT \'test\', [id] FROM [user] WHERE ([name] LIKE @param1)',
+    string: 'INSERT INTO [post] ([content], [userId]) SELECT \'test\', [id] FROM [user] WHERE ([name] LIKE \'A%\')'
+  },
   params: ['A%']
 });
 
@@ -342,6 +412,10 @@ Harness.test({
     text  : 'INSERT INTO `post` (`userId`) SELECT `id` FROM `user` WHERE (`name` LIKE ?)',
     string: 'INSERT INTO `post` (`userId`) SELECT `id` FROM `user` WHERE (`name` LIKE \'A%\')'
   },
+  mssql: {
+    text  : 'INSERT INTO [post] ([userId]) SELECT [id] FROM [user] WHERE ([name] LIKE @param1)',
+    string: 'INSERT INTO [post] ([userId]) SELECT [id] FROM [user] WHERE ([name] LIKE \'A%\')'
+  },
   params: ['A%']
 });
 
@@ -359,6 +433,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (x\'74657374\', 2)'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (0x74657374, 2)'
   },
   params: [new Buffer('test'), 2]
 });
@@ -379,6 +457,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`, `userId`) VALUES (?, ?)',
     string: 'INSERT INTO `post` (`content`, `userId`) VALUES (x\'74657374\', 2)'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content], [userId]) VALUES (@param1, @param2)',
+    string: 'INSERT INTO [post] ([content], [userId]) VALUES (0x74657374, 2)'
   },
   params: [new Buffer('test'), 2]
 });
@@ -402,6 +484,10 @@ Harness.test({
   mysql: {
     text  : 'INSERT INTO `post` (`content`) VALUES (?), (?)',
     string: 'INSERT INTO `post` (`content`) VALUES (x\'77686f6168\'), (x\'686579\')'
+  },
+  mssql: {
+    text  : 'INSERT INTO [post] ([content]) VALUES (@param1), (@param2)',
+    string: 'INSERT INTO [post] ([content]) VALUES (0x77686f6168), (0x686579)'
   },
   params: [new Buffer('whoah'), new Buffer('hey')]
 });

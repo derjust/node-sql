@@ -14,6 +14,10 @@ Harness.test({
     text  : 'SELECT `post`.* FROM `post` FOR UPDATE',
     string: 'SELECT `post`.* FROM `post` FOR UPDATE'
   },
+  mssql: {
+    text  : 'SELECT [post].* FROM [post] WITH (updlock)',
+    string: 'SELECT [post].* FROM [post] WITH (updlock)'
+  },
   params: []
 });
 
@@ -26,6 +30,10 @@ Harness.test({
   mysql: {
     text  : 'SELECT `post`.* FROM `post` INNER JOIN `user` ON (`user`.`id` = `post`.`userId`) WHERE (`post`.`content` = ?) FOR UPDATE',
     string: 'SELECT `post`.* FROM `post` INNER JOIN `user` ON (`user`.`id` = `post`.`userId`) WHERE (`post`.`content` = \'foo\') FOR UPDATE'
+  },
+  mssql: {
+    text  : 'SELECT [post].* FROM [post] INNER JOIN [user] ON ([user].[id] = [post].[userId]) WITH (updlock) WHERE ([post].[content] = @param1)',
+    string: 'SELECT [post].* FROM [post] INNER JOIN [user] ON ([user].[id] = [post].[userId]) WITH (updlock) WHERE ([post].[content] = \'foo\')'
   },
   params: ["foo"]
 });

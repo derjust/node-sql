@@ -18,6 +18,10 @@ Harness.test({
     text  : 'SELECT (CASE WHEN ? THEN ? WHEN ? THEN ? ELSE ? END) FROM `customer`',
     string: 'SELECT (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE 2 END) FROM `customer`',
   },
+  mssql: {
+    text  : 'SELECT (CASE WHEN @param1 THEN @param2 WHEN @param3 THEN @param4 ELSE @param5 END) FROM [customer]',
+    string: 'SELECT (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE 2 END) FROM [customer]',
+  },
   params: [true, 0, false, 1, 2]
 });
 
@@ -36,6 +40,10 @@ Harness.test({
     text  : 'SELECT (`customer`.`age` + (CASE WHEN ? THEN ? WHEN ? THEN ? ELSE ? END)) FROM `customer`',
     string: 'SELECT (`customer`.`age` + (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE 2 END)) FROM `customer`',
   },
+  mssql: {
+    text  : 'SELECT ([customer].[age] + (CASE WHEN @param1 THEN @param2 WHEN @param3 THEN @param4 ELSE @param5 END)) FROM [customer]',
+    string: 'SELECT ([customer].[age] + (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE 2 END)) FROM [customer]',
+  },
   params: [true, 0, false, 1, 2]
 });
 
@@ -52,6 +60,10 @@ Harness.test({
   },
   mysql: {
     text  : 'SELECT ((CASE WHEN ? THEN ? WHEN ? THEN ? ELSE ? END) + ?) FROM `customer`',
+    string: 'SELECT ((CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE 2 END) + 3) FROM `customer`',
+  },
+  mssql: {
+    text  : 'SELECT ((CASE WHEN @param1 THEN @param2 WHEN @param3 THEN @param4 ELSE @param5 END) + @param6) FROM [customer]',
     string: 'SELECT ((CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE 2 END) + 3) FROM `customer`',
   },
   params: [true, 0, false, 1, 2, 3]
@@ -72,6 +84,10 @@ Harness.test({
     text  : 'SELECT (CASE WHEN ? THEN ? WHEN ? THEN ? ELSE (`customer`.`age` BETWEEN ? AND ?) END) FROM `customer`',
     string: 'SELECT (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE (`customer`.`age` BETWEEN 10 AND 20) END) FROM `customer`',
   },
+  mssql: {
+    text  : 'SELECT (CASE WHEN @param1 THEN @param2 WHEN @param3 THEN @param4 ELSE ([customer].[age] BETWEEN @param5 AND @param6) END) FROM [customer]',
+    string: 'SELECT (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 ELSE ([customer].[age] BETWEEN 10 AND 20) END) FROM [customer]',
+  },
   params: [true, 0, false, 1, 10, 20]
 });
 
@@ -89,6 +105,10 @@ Harness.test({
   mysql: {
     text  : 'SELECT (CASE WHEN ? THEN ? WHEN ? THEN ? END) FROM `customer`',
     string: 'SELECT (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 END) FROM `customer`',
+  },
+  mssql: {
+    text  : 'SELECT (CASE WHEN @param1 THEN @param2 WHEN @param3 THEN @param4 END) FROM [customer]',
+    string: 'SELECT (CASE WHEN TRUE THEN 0 WHEN FALSE THEN 1 END) FROM [customer]',
   },
   params: [true, 0, false, 1]
 });
@@ -108,6 +128,10 @@ Harness.test({
     text  : 'SELECT (CASE WHEN (`customer`.`age` IN (?, ?, ?)) THEN ? WHEN (`customer`.`age` <= ?) THEN ? ELSE ? END) FROM `customer`',
     string: 'SELECT (CASE WHEN (`customer`.`age` IN (10, 20, 30)) THEN 0 WHEN (`customer`.`age` <= 60) THEN 1 ELSE 2 END) FROM `customer`',
   },
+  mssql: {
+    text  : 'SELECT (CASE WHEN ([customer].[age] IN (@param1, @param2, @param3)) THEN @param4 WHEN ([customer].[age] <= @param5) THEN @param6 ELSE @param7 END) FROM [customer]',
+    string: 'SELECT (CASE WHEN ([customer].[age] IN (10, 20, 30)) THEN 0 WHEN ([customer].[age] <= 60) THEN 1 ELSE 2 END) FROM [customer]',
+  },
   params: [10, 20, 30, 0, 60, 1, 2]
 });
 
@@ -126,6 +150,10 @@ Harness.test({
     text  : 'SELECT (CASE WHEN (`customer`.`age` IN (?, ?, ?)) THEN ? WHEN (`customer`.`age` <= ?) THEN ? END) FROM `customer`',
     string: 'SELECT (CASE WHEN (`customer`.`age` IN (10, 20, 30)) THEN 0 WHEN (`customer`.`age` <= 60) THEN 1 END) FROM `customer`',
   },
+  mssql: {
+    text  : 'SELECT (CASE WHEN ([customer].[age] IN (@param1, @param2, @param3)) THEN @param4 WHEN ([customer].[age] <= @param5) THEN @param6 END) FROM [customer]',
+    string: 'SELECT (CASE WHEN ([customer].[age] IN (10, 20, 30)) THEN 0 WHEN ([customer].[age] <= 60) THEN 1 END) FROM [customer]',
+  },
   params: [10, 20, 30, 0, 60, 1]
 });
 
@@ -143,6 +171,10 @@ Harness.test({
   mysql: {
     text  : 'SELECT (CASE WHEN (`customer`.`age` IN (?, ?, ?)) THEN (`customer`.`age` + ?) WHEN (`customer`.`age` <= ?) THEN (`customer`.`age` - ?) END) FROM `customer`',
     string: 'SELECT (CASE WHEN (`customer`.`age` IN (10, 20, 30)) THEN (`customer`.`age` + 5) WHEN (`customer`.`age` <= 60) THEN (`customer`.`age` - 1) END) FROM `customer`',
+  },
+  mssql: {
+    text  : 'SELECT (CASE WHEN ([customer].[age] IN (@param1, @param2, @param3)) THEN ([customer].[age] + @param4) WHEN ([customer].[age] <= @param5) THEN ([customer].[age] - @param6) END) FROM [customer]',
+    string: 'SELECT (CASE WHEN ([customer].[age] IN (10, 20, 30)) THEN ([customer].[age] + 5) WHEN ([customer].[age] <= 60) THEN ([customer].[age] - 1) END) FROM [customer]',
   },
   params: [10, 20, 30, 5, 60, 1]
 });

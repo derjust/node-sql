@@ -19,6 +19,10 @@ Harness.test({
     text  : 'SELECT `user`.`name`, `post`.`content` FROM `user` INNER JOIN `post` ON (`user`.`id` = `post`.`userId`)',
     string: 'SELECT `user`.`name`, `post`.`content` FROM `user` INNER JOIN `post` ON (`user`.`id` = `post`.`userId`)'
   },
+  mssql: {
+    text  : 'SELECT [user].[name], [post].[content] FROM [user] INNER JOIN [post] ON ([user].[id] = [post].[userId])',
+    string: 'SELECT [user].[name], [post].[content] FROM [user] INNER JOIN [post] ON ([user].[id] = [post].[userId])'
+  },
 });
 
 // WHERE - FROM - SELECT
@@ -37,6 +41,10 @@ Harness.test({
   mysql: {
     text  : 'SELECT `user`.`id` FROM `user` WHERE (`user`.`name` = ?)',
     string: 'SELECT `user`.`id` FROM `user` WHERE (`user`.`name` = \'\')'
+  },
+  mssql: {
+    text  : 'SELECT [user].[id] FROM [user] WHERE ([user].[name] = @param1)',
+    string: 'SELECT [user].[id] FROM [user] WHERE ([user].[name] = \'\')'
   },
   params: ['']
 });
@@ -61,6 +69,10 @@ Harness.test({
     text  : 'SELECT `user`.`name`, `post`.`content` FROM `user` INNER JOIN `post` ON (`user`.`id` = `post`.`userId`) WHERE (`user`.`name` = ?)',
     string: 'SELECT `user`.`name`, `post`.`content` FROM `user` INNER JOIN `post` ON (`user`.`id` = `post`.`userId`) WHERE (`user`.`name` = \'\')'
   },
+  mssql: {
+    text  : 'SELECT [user].[name], [post].[content] FROM [user] INNER JOIN [post] ON ([user].[id] = [post].[userId]) WHERE ([user].[name] = @param1)',
+    string: 'SELECT [user].[name], [post].[content] FROM [user] INNER JOIN [post] ON ([user].[id] = [post].[userId]) WHERE ([user].[name] = \'\')'
+  },
   params: ['']
 });
 
@@ -80,6 +92,10 @@ Harness.test({
   mysql: {
     text  : 'SELECT `user`.`id` FROM `user` WHERE (`user`.`name` = ?)',
     string: 'SELECT `user`.`id` FROM `user` WHERE (`user`.`name` = \'\')'
+  },
+  mssql: {
+    text  : 'SELECT [user].[id] FROM [user] WHERE ([user].[name] = @param1)',
+    string: 'SELECT [user].[id] FROM [user] WHERE ([user].[name] = \'\')'
   },
   params: ['']
 });
